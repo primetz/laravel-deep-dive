@@ -112,7 +112,8 @@ body {
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    column-gap: 83px;
+    -moz-column-gap: 83px;
+         column-gap: 83px;
     row-gap: 30px;
     list-style: none;
 }
@@ -236,3 +237,4 @@ body {
     color: #18a4e1;
     text-decoration: none;
 }
+
