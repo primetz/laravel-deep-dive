@@ -23,11 +23,9 @@ class NewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Category $category)
+    public function create()
     {
-        return view('admin.news.create', [
-            'categories' => $category->all()
-        ]);
+        return view('admin.news.create');
     }
 
     /**
