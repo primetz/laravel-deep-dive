@@ -17,6 +17,14 @@ class NewsController extends Controller
         $this->category = $category;
     }
 
+    public function index(News $news, Category $category)
+    {
+        return view('news.index', [
+            'news' => $news->all(),
+            'categories' => $this->category->all()
+        ]);
+    }
+
     public function category(int $id)
     {
 

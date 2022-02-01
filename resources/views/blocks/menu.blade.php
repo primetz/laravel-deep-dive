@@ -8,5 +8,8 @@
             <li class="nw-header-nav-list__item">
                 <a href="{{ route('category::index') }}" class="nw-header-nav-list__link">Все категории</a>
             </li>
+            <li class="nw-header-nav-list__item">
+                <a href="{{ route('news::index') }}" class="nw-header-nav-list__link">Все новости</a>
+            </li>
     </ul>
 </nav>

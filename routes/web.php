@@ -25,6 +25,9 @@ Route::group([
     'prefix' => '/news',
     'as' => 'news::'
 ], function () {
+    Route::get('', [NewsController::class, 'index'])
+        ->name('index');
+
     Route::get('/card/{id}', [NewsController::class, 'card'])
         ->where('id', '[0-9]+')
         ->name('card');
