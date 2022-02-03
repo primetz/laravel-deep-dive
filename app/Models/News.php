@@ -2,149 +2,60 @@
 
 namespace App\Models;
 
-class News
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * App\Models\News
+ *
+ * @property int $id
+ * @property int $category_id
+ * @property int|null $source_id
+ * @property int $status_id
+ * @property string $title
+ * @property string $content
+ * @property string|null $image
+ * @property string $publish_date
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property-read \App\Models\Category $category
+ * @property-read \App\Models\Status $status
+ * @method static \Illuminate\Database\Eloquent\Builder|News newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|News newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|News query()
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereCategoryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News wherePublishDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereSourceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereStatusId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
+class News extends Model
 {
-    private array $news = [
-        1 => [
-            'category_id' => 1,
-            'title' => 'News 1',
-            'short_description' => 'Lorem ipsum dolor sit amet.',
-            'details' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores consectetur distinctio dolores ducimus error ex laudantium minima modi, nemo porro quae sunt tempora tempore. Eligendi exercitationem facere officiis possimus sint!'
-        ],
-        2 => [
-            'category_id' => 1,
-            'title' => 'News 2',
-            'short_description' => 'Lorem ipsum dolor sit amet.',
-            'details' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores consectetur distinctio dolores ducimus error ex laudantium minima modi, nemo porro quae sunt tempora tempore. Eligendi exercitationem facere officiis possimus sint!'
-        ],
-        3 => [
-            'category_id' => 1,
-            'title' => 'News 3',
-            'short_description' => 'Lorem ipsum dolor sit amet.',
-            'details' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores consectetur distinctio dolores ducimus error ex laudantium minima modi, nemo porro quae sunt tempora tempore. Eligendi exercitationem facere officiis possimus sint!'
-        ],
-        4 => [
-            'category_id' => 1,
-            'title' => 'News 4',
-            'short_description' => 'Lorem ipsum dolor sit amet.',
-            'details' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores consectetur distinctio dolores ducimus error ex laudantium minima modi, nemo porro quae sunt tempora tempore. Eligendi exercitationem facere officiis possimus sint!'
-        ],
-        5 => [
-            'category_id' => 2,
-            'title' => 'News 5',
-            'short_description' => 'Lorem ipsum dolor sit amet.',
-            'details' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores consectetur distinctio dolores ducimus error ex laudantium minima modi, nemo porro quae sunt tempora tempore. Eligendi exercitationem facere officiis possimus sint!'
-        ],
-        6 => [
-            'category_id' => 2,
-            'title' => 'News 6',
-            'short_description' => 'Lorem ipsum dolor sit amet.',
-            'details' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores consectetur distinctio dolores ducimus error ex laudantium minima modi, nemo porro quae sunt tempora tempore. Eligendi exercitationem facere officiis possimus sint!'
-        ],
-        7 => [
-            'category_id' => 2,
-            'title' => 'News 7',
-            'short_description' => 'Lorem ipsum dolor sit amet.',
-            'details' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores consectetur distinctio dolores ducimus error ex laudantium minima modi, nemo porro quae sunt tempora tempore. Eligendi exercitationem facere officiis possimus sint!'
-        ],
-        8 => [
-            'category_id' => 2,
-            'title' => 'News 8',
-            'short_description' => 'Lorem ipsum dolor sit amet.',
-            'details' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores consectetur distinctio dolores ducimus error ex laudantium minima modi, nemo porro quae sunt tempora tempore. Eligendi exercitationem facere officiis possimus sint!'
-        ],
-        9 => [
-            'category_id' => 3,
-            'title' => 'News 9',
-            'short_description' => 'Lorem ipsum dolor sit amet.',
-            'details' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores consectetur distinctio dolores ducimus error ex laudantium minima modi, nemo porro quae sunt tempora tempore. Eligendi exercitationem facere officiis possimus sint!'
-        ],
-        10 => [
-            'category_id' => 3,
-            'title' => 'News 10',
-            'short_description' => 'Lorem ipsum dolor sit amet.',
-            'details' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores consectetur distinctio dolores ducimus error ex laudantium minima modi, nemo porro quae sunt tempora tempore. Eligendi exercitationem facere officiis possimus sint!'
-        ],
-        11 => [
-            'category_id' => 3,
-            'title' => 'News 11',
-            'short_description' => 'Lorem ipsum dolor sit amet.',
-            'details' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores consectetur distinctio dolores ducimus error ex laudantium minima modi, nemo porro quae sunt tempora tempore. Eligendi exercitationem facere officiis possimus sint!'
-        ],
-        12 => [
-            'category_id' => 3,
-            'title' => 'News 12',
-            'short_description' => 'Lorem ipsum dolor sit amet.',
-            'details' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores consectetur distinctio dolores ducimus error ex laudantium minima modi, nemo porro quae sunt tempora tempore. Eligendi exercitationem facere officiis possimus sint!'
-        ],
-        13 => [
-            'category_id' => 4,
-            'title' => 'News 13',
-            'short_description' => 'Lorem ipsum dolor sit amet.',
-            'details' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores consectetur distinctio dolores ducimus error ex laudantium minima modi, nemo porro quae sunt tempora tempore. Eligendi exercitationem facere officiis possimus sint!'
-        ],
-        14 => [
-            'category_id' => 4,
-            'title' => 'News 14',
-            'short_description' => 'Lorem ipsum dolor sit amet.',
-            'details' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores consectetur distinctio dolores ducimus error ex laudantium minima modi, nemo porro quae sunt tempora tempore. Eligendi exercitationem facere officiis possimus sint!'
-        ],
-        15 => [
-            'category_id' => 4,
-            'title' => 'News 15',
-            'short_description' => 'Lorem ipsum dolor sit amet.',
-            'details' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores consectetur distinctio dolores ducimus error ex laudantium minima modi, nemo porro quae sunt tempora tempore. Eligendi exercitationem facere officiis possimus sint!'
-        ],
-        16 => [
-            'category_id' => 4,
-            'title' => 'News 16',
-            'short_description' => 'Lorem ipsum dolor sit amet.',
-            'details' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores consectetur distinctio dolores ducimus error ex laudantium minima modi, nemo porro quae sunt tempora tempore. Eligendi exercitationem facere officiis possimus sint!'
-        ],
-        17 => [
-            'category_id' => 5,
-            'title' => 'News 17',
-            'short_description' => 'Lorem ipsum dolor sit amet.',
-            'details' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores consectetur distinctio dolores ducimus error ex laudantium minima modi, nemo porro quae sunt tempora tempore. Eligendi exercitationem facere officiis possimus sint!'
-        ],
-        18 => [
-            'category_id' => 5,
-            'title' => 'News 18',
-            'short_description' => 'Lorem ipsum dolor sit amet.',
-            'details' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores consectetur distinctio dolores ducimus error ex laudantium minima modi, nemo porro quae sunt tempora tempore. Eligendi exercitationem facere officiis possimus sint!'
-        ],
-        19 => [
-            'category_id' => 5,
-            'title' => 'News 19',
-            'short_description' => 'Lorem ipsum dolor sit amet.',
-            'details' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores consectetur distinctio dolores ducimus error ex laudantium minima modi, nemo porro quae sunt tempora tempore. Eligendi exercitationem facere officiis possimus sint!'
-        ],
-        20 => [
-            'category_id' => 5,
-            'title' => 'News 20',
-            'short_description' => 'Lorem ipsum dolor sit amet.',
-            'details' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores consectetur distinctio dolores ducimus error ex laudantium minima modi, nemo porro quae sunt tempora tempore. Eligendi exercitationem facere officiis possimus sint!'
-        ],
+    use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'content',
+        'category_id',
+        'status_id',
+        'publish_date'
     ];
 
-    public function all(): \Illuminate\Support\Collection
+    public function category()
     {
-        return \DB::table('news')->get();
+        return $this->belongsTo(Category::class);
     }
 
-    public function getById(int $id): array
+    public function status()
     {
-        return $this->news[$id];
-    }
-
-    public function getByCategoryId(int $id): array
-    {
-        $news = [];
-        foreach ($this->news as $key => $value) {
-            if ($value['category_id'] === $id) {
-                $news[$key] = $value;
-            }
-        }
-        return $news;
+        return $this->belongsTo(Status::class);
     }
 }

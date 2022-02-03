@@ -2,23 +2,41 @@
 
 namespace App\Models;
 
-class Category
-{
-    private array $categories = [
-        1 => 'Бизнес',
-        2 => 'Финансы',
-        3 => 'Политика',
-        4 => 'Технологии',
-        5 => 'Спорт',
-    ];
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-    public function all(): array
+/**
+ * App\Models\Category
+ *
+ * @property int $id
+ * @property string $category
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\News[] $news
+ * @property-read int|null $news_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Category newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Category newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Category query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereCategory($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
+class Category extends Model
+{
+    use HasFactory;
+
+    public function news()
     {
-        return $this->categories;
+        return $this->hasMany(News::class);
     }
 
-    public function getById(int $id): string
+    public function getList()
     {
-        return $this->categories[$id];
+        return self::select(['id', 'category'])
+            ->orderBy('id')
+            ->get()
+            ->pluck('category', 'id');
     }
 }

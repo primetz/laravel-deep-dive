@@ -28,11 +28,11 @@ Route::group([
     Route::get('', [NewsController::class, 'index'])
         ->name('index');
 
-    Route::get('/card/{id}', [NewsController::class, 'card'])
+    Route::get('/card/{news}', [NewsController::class, 'card'])
         ->where('id', '[0-9]+')
         ->name('card');
 
-    Route::get('/category/{id}', [NewsController::class, 'category'])
+    Route::get('/category/{category}', [NewsController::class, 'category'])
         ->where('id', '[0-9]+')
         ->name('category');
 });
