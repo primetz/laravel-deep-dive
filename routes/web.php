@@ -13,14 +13,40 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])
+    ->name('home');
+
+Route::group([
+    'prefix' => '/news',
+    'as' => 'news::'
+], function () {
+    Route::get('', [\App\Http\Controllers\NewsController::class, 'categories'])
+        ->name('categories');
+
+    Route::get('/category/{name}', [\App\Http\Controllers\NewsController::class, 'category'])
+        ->where('name', '^[\w]+$')
+        ->name('category');
+
+    Route::get('/article/{id}', [\App\Http\Controllers\NewsController::class, 'article'])
+        ->where('id', '[0-9]+')
+        ->name('article');
 });
 
-Route::get('/hello', function () {
-    return view('hello');
+Route::group([
+    'prefix' => '/admin/news',
+    'as' => 'admin::news::'
+], function () {
+    Route::get('', [\App\Http\Controllers\Admin\NewsController::class, 'index'])
+        ->name('index');
+
+    Route::get('/create', [\App\Http\Controllers\Admin\NewsController::class, 'create'])
+        ->name('create');
+
+    Route::get('/update', [\App\Http\Controllers\Admin\NewsController::class, 'update'])
+        ->name('update');
+
+    Route::get('/delete', [\App\Http\Controllers\Admin\NewsController::class, 'destroy'])
+        ->name('delete');
 });
 
-Route::get('/news', function () {
-    return view('news');
-});
+Route::get('/register', [\App\Http\Controllers\Auth\RegisterController::class, 'index']);
