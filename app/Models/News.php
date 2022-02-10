@@ -127,9 +127,9 @@ class News
         ],
     ];
 
-    public function all(): array
+    public function all(): \Illuminate\Support\Collection
     {
-        return $this->news;
+        return \DB::table('news')->get();
     }
 
     public function getById(int $id): array
