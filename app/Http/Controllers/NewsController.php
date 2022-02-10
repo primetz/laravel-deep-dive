@@ -2,73 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\News;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
-    private array $news = [
-        1 => [
-            'category_id' => 1,
-            'title' => 'News 1'
-        ],
-        2 => [
-            'category_id' => 1,
-            'title' => 'News 2'
-        ],
-        3 => [
-            'category_id' => 2,
-            'title' => 'News 3'
-        ],
-        4 => [
-            'category_id' => 2,
-            'title' => 'News 4'
-        ],
-        5 => [
-            'category_id' => 3,
-            'title' => 'News 5'
-        ],
-        6 => [
-            'category_id' => 3,
-            'title' => 'News 6'
-        ]
-    ];
+    private News $news;
+    private Category $category;
 
-    private array $categories = [
-        1 => 'business',
-        2 => 'finance',
-        3 => 'sport'
-    ];
-
-    public function categories()
+    public function __construct(News $news, Category $category)
     {
-        $list = '';
-        foreach ($this->categories as $category) {
-            $url = route('news::category', ['name' => $category]);
-            $list .= "<li><a href='$url'>$category</a></li>";
-        }
-
-        return '<ul>' . $list . '</ul>';
+        $this->news = $news;
+        $this->category = $category;
     }
 
-    public function category(string $name)
+    public function category(int $id)
     {
-        $res = '';
-        foreach ($this->news as $id => $item) {
-            if ($item['category_id'] === array_search($name, $this->categories)) {
-                $url = route('news::article', ['id' => $id]);
-                $res .= "<div>
-                            <a href='$url'>{$item['title']}</a>
-                         </div>";
-            }
-        }
 
-        return $res;
+        return view('news.category', [
+            'news' => $this->news->getByCategoryId($id),
+            'categories' => $this->category->all(),
+            'category_name' => $this->category->getById($id)
+        ]);
     }
 
-    public function article(int $id)
+    public function card(int $id)
     {
-        $news = $this->news[$id];
+        $news = $this->news->getById($id);
 
-        return '<h1>' . $news['title'] . '</h1>';
+        return view('news.card', [
+            'news' => $news,
+            'categories' => $this->category->all(),
+            'category_name' => $this->category->getById($news['category_id'])
+        ]);
     }
 }

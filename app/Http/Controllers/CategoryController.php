@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class CategoryController extends Controller
 {
     public function index(Category $category)
     {
-        return view('home.index', [
+        return view('category.index', [
             'categories' => $category->all()
         ]);
     }

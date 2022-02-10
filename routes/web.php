@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,40 +18,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])
+Route::get('/', [HomeController::class, 'index'])
     ->name('home');
 
 Route::group([
     'prefix' => '/news',
     'as' => 'news::'
 ], function () {
-    Route::get('', [\App\Http\Controllers\NewsController::class, 'categories'])
-        ->name('categories');
-
-    Route::get('/category/{name}', [\App\Http\Controllers\NewsController::class, 'category'])
-        ->where('name', '^[\w]+$')
-        ->name('category');
-
-    Route::get('/article/{id}', [\App\Http\Controllers\NewsController::class, 'article'])
+    Route::get('/card/{id}', [NewsController::class, 'card'])
         ->where('id', '[0-9]+')
-        ->name('article');
+        ->name('card');
+
+    Route::get('/category/{id}', [NewsController::class, 'category'])
+        ->where('id', '[0-9]+')
+        ->name('category');
 });
 
-Route::group([
-    'prefix' => '/admin/news',
-    'as' => 'admin::news::'
-], function () {
-    Route::get('', [\App\Http\Controllers\Admin\NewsController::class, 'index'])
-        ->name('index');
+Route::get('/category', [\App\Http\Controllers\CategoryController::class, 'index'])
+    ->name('category::index');
 
-    Route::get('/create', [\App\Http\Controllers\Admin\NewsController::class, 'create'])
-        ->name('create');
+Route::get('/auth/login', [LoginController::class, 'login'])
+    ->name('auth::login');
 
-    Route::get('/update', [\App\Http\Controllers\Admin\NewsController::class, 'update'])
-        ->name('update');
+Route::resource('/admin/category', AdminCategoryController::class);
 
-    Route::get('/delete', [\App\Http\Controllers\Admin\NewsController::class, 'destroy'])
-        ->name('delete');
-});
-
-Route::get('/register', [\App\Http\Controllers\Auth\RegisterController::class, 'index']);
+Route::resource('/admin/news', AdminNewsController::class);
