@@ -11,7 +11,7 @@ class LoginController extends Controller
     public function login(Category $category)
     {
         return view('auth.login', [
-            'categories' => $category->all()
+            'categoryList' => $category->getList()
         ]);
     }
 }

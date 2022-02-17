@@ -11,6 +11,7 @@
                     <img src="{{ asset('img/' . $item->image) }}" alt="{{ $item->title }}" class="category-news-list__img" width="200" height="134">
                 </a>
                 <a href="{{ route('news::card', $item->id) }}" class="category-news-list__text-link">{{ $item->title }}</a>
+                <small>{{ $item->publish_date }}</small>
             </li>
         @empty
             <li class="category-news-list__item_empty">Нет новостей.</li>

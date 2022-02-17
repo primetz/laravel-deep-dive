@@ -14,7 +14,7 @@ class StatusSeeder extends Seeder
      */
     public function run(Generator $generator)
     {
-        $statuses = ['publish', 'future', 'draft', 'pending', 'private'];
+        $statuses = ['опубликовано', 'запланировано', 'черновик', 'модерация', 'приватная'];
 
         foreach ($statuses as $status) {
             \DB::table('statuses')

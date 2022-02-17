@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\News;
+use App\Models\Status;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
@@ -15,7 +17,13 @@ class NewsController extends Controller
      */
     public function index()
     {
-        //
+        $news = News::select(['id', 'title', 'image', 'publish_date'])
+            ->orderBy('publish_date', 'desc')
+            ->paginate(4);
+
+        return view('admin.news.index', [
+            'news' => $news
+        ]);
     }
 
     /**
@@ -23,9 +31,12 @@ class NewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Category $category, Status $status)
     {
-        return view('admin.news.create');
+        return view('admin.news.create', [
+            'categories' => $category->getList(),
+            'statuses' => $status->getList()
+        ]);
     }
 
     /**
@@ -36,7 +47,12 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $news = new News();
+        $news->fill($request->all());
+        $news->save();
+
+        return redirect()->route('news.show', ['news' => $news->id])
+            ->with('success', 'Новость создана успешно.');
     }
 
     /**
@@ -45,9 +61,12 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(News $news)
     {
-        //
+        return view('admin.news.show', [
+            'news' => $news,
+            'category' => $news->category->category
+        ]);
     }
 
     /**
@@ -56,9 +75,13 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(News $news)
     {
-        //
+        return view('admin.news.edit', [
+            'categories' => $news->category->getList(),
+            'statuses' => $news->status->getList(),
+            'news' => $news
+        ]);
     }
 
     /**
@@ -70,7 +93,12 @@ class NewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $news = News::find($id);
+        $news->fill($request->all());
+        $news->save();
+
+        return redirect()->route('news.show', ['news' => $id])
+            ->with('success', 'Новость отредактирована успешно.');
     }
 
     /**
@@ -81,6 +109,9 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        News::destroy($id);
+
+        return redirect()->route('news.index')
+            ->with('success', 'Новость успешно удалена.');
     }
 }

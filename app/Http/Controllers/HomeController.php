@@ -10,7 +10,7 @@ class HomeController extends Controller
     public function index(Category $category)
     {
         return view('home.index', [
-            'categories' => $category->all()
+            'categoryList' => $category->getList()
         ]);
     }
 }
