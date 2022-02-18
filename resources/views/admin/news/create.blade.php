@@ -1,34 +1,38 @@
 @extends('layouts.admin')
 
-@section('title', 'Создание новости')
+@section('title', __('labels.admin.news.create_heading'))
 
 @section('content')
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
     @endif
     <div class="form-popup form-popup_big">
         <div class="form-popup__header">
-            <span class="form-popup__title">Создание новости</span>
+            <span class="form-popup__title">{{ __('labels.admin.news.create_heading') }}</span>
         </div>
         <div class="form-popup__body">
             <form action="{{ route('news.store') }}" method="post" class="form-popup__action">
                 @csrf
-                <input type='text' id='news-title' name='title' class="form-popup__control" placeholder="Название новости">
-                <textarea name="content" id="news-details" cols="30" rows="10" placeholder="Подробное описание новости" class="form-popup__control"></textarea>
-                <label for="category">Категория</label>
+                <input type='text' id='news-title' name='title' class="form-popup__control" placeholder="{{ __('labels.admin.news.title') }}" value="{{ old('title') }}">
+                <textarea name="content" id="news-details" cols="30" rows="10" placeholder="{{ __('labels.admin.news.content') }}" class="form-popup__control">{{ old('content') }}</textarea>
+                <label for="category">{{ __('labels.admin.news.category') }}</label>
                 <select name="category_id" id="category" class="form-popup__control">
                     @foreach($categories as $id => $category)
-                        <option value="{{ $id }}">{{ $category }}</option>
+                        <option value="{{ $id }}" @if( old('category_id') == $id ) selected @endif>{{ $category }}</option>
                     @endforeach
                 </select>
-                <label for="publish-date">Дата публикации</label>
-                <input type="datetime-local" id="date" name="publish_date" class="form-popup__control" value="{{ date('Y-m-d H:m:s') }}" min="{{ date('Y-m-d H:m:s') }}">
+                <label for="publish-date">{{ __('labels.admin.news.date') }}</label>
+                <input type="datetime-local" id="date" name="publish_date" class="form-popup__control" value="{{ old('publish_date') ?? date('Y-m-d H:m:s') }}">
                 @foreach($statuses as $id => $status)
-                    <label><input type="radio" name="status_id" value="{{ $id }}" @if($status === 'черновик') checked @endif> {{ $status }}</label>
+                    <label><input type="radio" name="status_id" value="{{ $id }}" @if( old('status_id') == $id) checked @endif> {{ $status }}</label>
                 @endforeach
-                <input type="submit" class="form-popup__btn" value="Создать">
+                <input type="submit" class="form-popup__btn" value="{{ __('labels.admin.news.submit') }}">
             </form>
         </div>
     </div>
