@@ -25,12 +25,15 @@ body {
     padding: 10px 20px;
     border-radius: 4px;
     box-sizing: border-box;
-    transition: all 1s;
+    color: #d8efdd;
 }
 
 .alert-success {
-    color: #d8efdd;
     background-color: #28a745;
+}
+
+.alert-danger {
+    background-color: #dc3545;
 }
 
 .nw-header,

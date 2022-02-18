@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminNewsStoreRequest;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\Status;
@@ -42,10 +43,10 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param AdminNewsStoreRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AdminNewsStoreRequest $request)
     {
         $news = new News();
         $news->fill($request->all());
