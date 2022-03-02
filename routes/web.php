@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
@@ -44,6 +45,53 @@ Route::get('/category', [CategoryController::class, 'index'])
 Route::get('/auth/login', [LoginController::class, 'login'])
     ->name('auth::login');
 
-Route::resource('/admin/category', AdminCategoryController::class);
+Route::group([
+    'prefix' => '/admin',
+    'as' => 'admin.',
+    'middleware' => 'auth'
+], function () {
+    Route::resource('/category', AdminCategoryController::class);
 
-Route::resource('/admin/news', AdminNewsController::class);
+    Route::resource('/news', AdminNewsController::class);
+
+    Route::group([
+        'prefix' => '/profile',
+        'as' => 'profile.'
+    ], function () {
+        Route::get('/', [AdminProfileController::class, 'index'])
+            ->name('index')
+            ->middleware('check_admin');
+
+        Route::get('/show', [AdminProfileController::class, 'show'])
+            ->name('show');
+
+        Route::put('/update', [AdminProfileController::class, 'update'])
+            ->name('update');
+
+        Route::get('/create', [AdminProfileController::class, 'create'])
+            ->name('create')
+            ->middleware('check_admin');
+
+        Route::post('/save', [AdminProfileController::class, 'save'])
+            ->name('save')
+            ->middleware('check_admin');
+
+        Route::get('/edit/{id}', [AdminProfileController::class, 'edit'])
+            ->where('id', '[0-9]+')
+            ->name('edit')
+            ->middleware('check_admin');
+
+        Route::put('/store/{id}', [AdminProfileController::class, 'store'])
+            ->where('id', '[0-9]+')
+            ->name('store')
+            ->middleware('check_admin');
+
+        Route::delete('/delete/{id}', [AdminProfileController::class, 'destroy'])
+            ->where('id', '[0-9]+')
+            ->name('delete');
+    });
+});
+
+Auth::routes(['register' => false]);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
